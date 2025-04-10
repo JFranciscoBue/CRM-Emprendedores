@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import authRouter from "./auth/auth.routes";
+import clientsRouter from "./clients/clients.routes";
 import DBConnection from "./database";
 
 const app = express();
@@ -16,6 +17,7 @@ app.set("port", process.env.PORT || 3000);
 
 // Routes
 app.use("/auth", authRouter);
+app.use("/clients", clientsRouter);
 
 // Initialization
 
