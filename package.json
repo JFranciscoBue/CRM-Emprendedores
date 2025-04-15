@@ -4,7 +4,8 @@
   "description": "CRM para emprendedores. Gestion de Clientes y Ventas.",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon"
+    "build": "npx tsc -w",
+    "dev": "nodemon dist/index.js"
   },
   "author": "Juan Francisco Bue",
   "license": "ISC",
