@@ -1,12 +1,13 @@
 import { Router } from "express";
 import clientsController from "./clients.controller";
+import validNote from "../middlewares/clients/validNote";
 const router = Router();
 
-router.get("/", clientsController.getAllClients);
+router.get("/getByUser/:userId", clientsController.getClientsByUser);
 router.get("/:id", clientsController.getClientById);
-router.get("/getByUser", clientsController.getClientsByUser);
+router.get("/", clientsController.getAllClients);
 router.post("/", clientsController.addClient);
-router.patch("/addNote", clientsController.addNoteToClient);
+router.patch("/addNote", validNote, clientsController.addNoteToClient);
 router.put("/update", clientsController.updateClient);
 router.delete("/:id", clientsController.deleteClient);
 

@@ -4,6 +4,10 @@ import cors from "cors";
 import authRouter from "./auth/auth.routes";
 import clientsRouter from "./clients/clients.routes";
 import DBConnection from "./database";
+import { config as envConfig } from "dotenv";
+import tokenValidation from "./middlewares/authorization/token";
+
+envConfig({ path: ".env" });
 
 const app = express();
 
@@ -17,7 +21,7 @@ app.set("port", process.env.PORT || 3000);
 
 // Routes
 app.use("/auth", authRouter);
-app.use("/clients", clientsRouter);
+app.use("/clients", tokenValidation, clientsRouter);
 
 // Initialization
 

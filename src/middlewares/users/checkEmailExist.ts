@@ -5,12 +5,13 @@ const checkEmailExists = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   const { email } = req.body;
   const user = await userModel.findOne({ email });
 
   if (user) {
     res.status(409).json({ message: "Email already exist" });
+    return;
   }
 
   next();

@@ -1,9 +1,9 @@
+import { config } from "dotenv";
+config();
 import userModel from "../models/User.model";
 import { IUserDto } from "../dto/User.dto";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
-
-const SECRET_KEY = process.env.SECRET_KEY || "clave-secreta";
 
 const authService = {
   register: async (credentials: IUserDto): Promise<Object> => {
@@ -28,7 +28,7 @@ const authService = {
 
     const token = jwt.sign(
       { userId: user._id, email: user.email },
-      SECRET_KEY,
+      process.env.JWT_SECRET as string,
       {
         expiresIn: "1d",
       }

@@ -1,14 +1,26 @@
 import { Document } from "mongoose";
 import { IClientDto } from "../dto/Client.dto";
 import Client from "../models/Client.model";
+import mongoose from "mongoose";
 
 const service = {
   getAllClients: async (): Promise<Document[]> => {
     return await Client.find();
   },
 
-  getClientsByUser: async (userId: string): Promise<Document[]> => {
-    const userClients = await Client.find({ userId });
+  getClientsByUser: async (userId: string): Promise<Document[] | string> => {
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return "Invalid userId";
+    }
+
+    const objectUserId = new mongoose.Types.ObjectId(userId);
+    console.log(objectUserId);
+    
+    const userClients = await Client.find({ userId: objectUserId });
+
+    if (userClients.length === 0) {
+      return "You have not any Client Yet. Add one!";
+    }
 
     return userClients;
   },
@@ -33,19 +45,35 @@ const service = {
     return { client };
   },
 
-  getClientById: async (id: string): Promise<Document | null> => {
-    return await Client.findById(id);
+  getClientById: async (id: string): Promise<Object> => {
+    const clientFound = await Client.findById(id);
+
+    if (!clientFound) {
+      throw new Error(`Client with ID: ${id} hasn´t exist`);
+    }
+
+    return { clientFound };
   },
 
   updateClient: async (
     id: string,
     data: Partial<IClientDto>
-  ): Promise<Document | null> => {
-    return await Client.findByIdAndUpdate(id, data, { new: true });
+  ): Promise<Object> => {
+    const clientUpdated = await Client.findByIdAndUpdate(id, data, {
+      new: true,
+    });
+
+    if (!clientUpdated) throw new Error(`Client with ID: ${id} hasn´t exist`);
+
+    return { clientUpdated };
   },
 
-  deleteClient: async (id: string): Promise<Document | null> => {
-    return await Client.findByIdAndDelete(id, { new: true });
+  deleteClient: async (id: string): Promise<Object> => {
+    const clientDeleted = await Client.findByIdAndDelete(id, { new: true });
+
+    if (!clientDeleted) throw new Error("Cannot delete the client. Try Again");
+
+    return { clientDeleted };
   },
 
   searchClients: async (query: string) => {},

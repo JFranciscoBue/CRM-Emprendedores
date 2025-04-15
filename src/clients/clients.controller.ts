@@ -11,13 +11,10 @@ const controller = {
   },
 
   getClientsByUser: async (req: Request, res: Response) => {
+    console.log("PARAMS:", req.params);
+    const { userId } = req.params;
     try {
-      const clients = await clientService.getClientsByUser(req.body);
-
-      if (clients.length === 0)
-        res.status(200).send("You have not any client yet. Add One Now.");
-
-      res.status(200).json(clients);
+      res.status(200).json(await clientService.getClientsByUser(userId));
     } catch (error: any) {
       res.status(400).json(error.message);
     }
@@ -42,32 +39,23 @@ const controller = {
 
   getClientById: async (req: Request, res: Response) => {
     try {
-      if (!(await clientService.getClientById(req.params.id))) {
-        res.status(404).json(`Client with id: ${req.params.id} has not exist`);
-      }
       res.status(200).json(await clientService.getClientById(req.params.id));
     } catch (error: any) {
-      res.status(400).json(error.message);
+      res.status(404).json(error.message);
     }
   },
 
   updateClient: async (req: Request, res: Response) => {
     const { id, data } = req.body;
     try {
-      if (!(await clientService.updateClient(id, data))) {
-        res.status(404).json(`Client with id: ${id} has not exist`);
-      }
       res.status(200).json(await clientService.updateClient(id, data));
     } catch (error: any) {
-      res.status(400).json(error.message);
+      res.status(404).json(error.message);
     }
   },
 
   deleteClient: async (req: Request, res: Response) => {
     try {
-      if (!(await clientService.deleteClient(req.params.id))) {
-        res.status(404).json(`Client with id: ${req.params.id} has not exist`);
-      }
       res.status(200).json(await clientService.deleteClient(req.params.id));
     } catch (error: any) {
       res.status(400).json(error.message);
