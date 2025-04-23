@@ -4,7 +4,11 @@ import jwt from "jsonwebtoken";
 
 envConfig({ path: ".env" });
 
-const tokenValidation = (req: Request, res: Response, next: NextFunction) => {
+const tokenValidation = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void => {
   const tokenParts = req.headers["authorization"]?.split(" ");
 
   if (!tokenParts || tokenParts.length !== 2) {
