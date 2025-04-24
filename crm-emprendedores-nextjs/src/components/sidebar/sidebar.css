@@ -1,0 +1,43 @@
+.Sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  width: 15%;
+  background-color: var(--verde-suave);
+}
+
+.Sidebar__head {
+  margin-bottom: 12px;
+  width: 100%;
+  text-align: center;
+  padding: 15px 20px;
+  color: green;
+  font-weight: bolder;
+}
+
+.Sidebar__navigation {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.Sidebar__navigation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.Sidebar__navigation-list li {
+  font-size: 21px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 15px 30px;
+}
+
+.Sidebar__navigation-list li:hover {
+  background-color: var(--verde-menta);
+}
+
+.Sidebar__navigation-list li > a {
+  color: black;
+}

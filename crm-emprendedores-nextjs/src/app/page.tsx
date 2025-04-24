@@ -1,95 +1,77 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import "./page.css";
+import Link from "next/link";
+import React, { useState } from "react";
+import ILoginForm from "@/interfaces/loginForm";
+import loginFormValidation from "@/utils/forms/LoginFormValidation";
+
+const initialValue: ILoginForm = {
+  email: "",
+  password: "",
+};
+
+const errorsInitialValue: { [key: string]: string } = {};
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [formData, setFormData] = useState(initialValue);
+  const [errors, setErrors] = useState(errorsInitialValue);
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    e.preventDefault();
+    const { name, value } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+
+    const validations = loginFormValidation(formData);
+
+    if (Object.keys(validations).length > 0) {
+      alert("Formulario con errores");
+      setErrors(validations as { [key: string]: string });
+      return;
+    }
+
+    setErrors(errorsInitialValue);
+    alert("Formulario Enviado");
+
+    setFormData(initialValue);
+  };
+
+  return (
+    <form className="loginForm" onSubmit={handleFormSubmit}>
+      <h2>Inicia Sesion</h2>
+      {errors.fields && <p>{errors.fields}</p>}
+      <div className="loginForm__field">
+        <label htmlFor="email">Correo Electronico</label>
+        {errors.email && <p>{errors.email}</p>}
+        <input
+          type="text"
+          onChange={handleInputChange}
+          value={formData.email}
+          name="email"
+        />
+      </div>
+      <div className="loginForm__field">
+        <label htmlFor="password">Contraseña</label>
+        <input
+          type="password"
+          onChange={handleInputChange}
+          value={formData.password}
+          name="password"
+        />
+      </div>
+      <div className="loginForm__field">
+        <input type="submit" value="INICIAR SESION" id="formSubmitButton" />
+      </div>
+      <div className="loginForm__registerButton">
+        <Link href="/register">Registrate</Link>
+      </div>
+    </form>
   );
 }

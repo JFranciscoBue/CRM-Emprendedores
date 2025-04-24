@@ -1,0 +1,105 @@
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 100vh;
+  width: 85%;
+}
+
+.dashboardContainer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 32px;
+  color: green;
+  width: 100%;
+}
+
+.dashboardContainer__header > h2 {
+  margin-left: 40px;
+}
+
+.dashboardContainer__header > a {
+  margin-right: 40px;
+  padding: 4px 8px;
+  color: white;
+  border-radius: 5px;
+  font-size: 19px;
+  background-color: green;
+  transition: all 0.3s ease;
+}
+
+.dashboardContainer__header > a:hover {
+  background-color: rgb(11, 172, 11);
+}
+
+.dashboardContainer__clientsAndProjects {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 150px;
+  width: 100%;
+}
+
+.dashboardContainer__clientsAndProjects-clients,
+.dashboardContainer__clientsAndProjects-projects {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  height: 135px;
+  width: 270px;
+  background-color: var(--verde-pastel);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.dashboardContainer__clientsAndProjects-clients > h3,
+.dashboardContainer__clientsAndProjects-projects > h3 {
+  color: green;
+  font-size: 25px;
+}
+
+.dashboardContainer__clientsAndProjects-clients > p,
+.dashboardContainer__clientsAndProjects-projects > p {
+  color: green;
+  font-weight: bolder;
+  font-size: 40px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.dashboardContainer__recentProjects-title {
+  font-size: 32px;
+  color: green;
+  margin-left: 40px;
+}
+
+.dashboardContainer__recentProjects-table {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #f4f7ed;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #2d4739;
+}
+
+.dashboardContainer__recentProjects-table thead {
+  background-color: #cde6c3;
+}
+
+.dashboardContainer__recentProjects-table th,
+.dashboardContainer__recentProjects-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #d9e7d0;
+}
+
+.dashboardContainer__recentProjects-table tbody tr:last-child td {
+  border-bottom: none;
+}
