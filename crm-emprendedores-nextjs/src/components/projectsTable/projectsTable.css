@@ -1,0 +1,54 @@
+.table-scroll {
+  max-height: 200px; /* Ajustá la altura que quieras */
+  overflow-y: auto;
+}
+
+.table-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+  background: #f4f6ef;
+  border-radius: 4px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+  background-color: #4caf50;
+  border-radius: 4px;
+  border: 2px solid #f4f6ef;
+}
+
+.table-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #4caf50 #f4f6ef;
+}
+
+.dashboardContainer__recentProjects-table {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #f4f7ed;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  font-family: sans-serif;
+  font-size: 14px;
+  color: #2d4739;
+}
+
+.dashboardContainer__recentProjects-table thead {
+  background-color: #cde6c3;
+}
+
+.dashboardContainer__recentProjects-table th,
+.dashboardContainer__recentProjects-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #d9e7d0;
+}
+
+.dashboardContainer__recentProjects-table tbody tr:last-child td {
+  border-bottom: none;
+}

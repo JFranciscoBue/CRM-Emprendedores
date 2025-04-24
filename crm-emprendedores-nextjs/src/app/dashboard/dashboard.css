@@ -73,33 +73,3 @@
   color: green;
   margin-left: 40px;
 }
-
-.dashboardContainer__recentProjects-table {
-  width: 90%;
-  max-width: 800px;
-  margin: 0 auto;
-  border-collapse: separate;
-  border-spacing: 0;
-  background-color: #f4f7ed;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  font-family: sans-serif;
-  font-size: 14px;
-  color: #2d4739;
-}
-
-.dashboardContainer__recentProjects-table thead {
-  background-color: #cde6c3;
-}
-
-.dashboardContainer__recentProjects-table th,
-.dashboardContainer__recentProjects-table td {
-  padding: 10px 12px;
-  text-align: left;
-  border-bottom: 1px solid #d9e7d0;
-}
-
-.dashboardContainer__recentProjects-table tbody tr:last-child td {
-  border-bottom: none;
-}
