@@ -73,7 +73,7 @@ const Dashboard = () => {
           </div>
           <ProjectsTable
             projects={userProjects.map((project) => ({
-              name: project.title,
+              title: project.title,
               client: project.clientId.name,
               status: project.status,
             }))}

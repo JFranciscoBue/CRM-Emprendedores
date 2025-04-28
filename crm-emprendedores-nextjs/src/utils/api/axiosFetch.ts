@@ -41,3 +41,13 @@ export const addClient = async (clientData: IClientForm, token: string) => {
   });
   return response;
 };
+
+export const getClient = async (id: string, token: string) => {
+  const response = await axios.get(`${API}/clients/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response;
+};

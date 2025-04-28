@@ -1,8 +1,10 @@
+"use client";
+
 import "./projectsTable.css";
 import { useState } from "react";
 
 type Project = {
-  name: string;
+  title: string;
   client: string;
   status: string;
 };
@@ -12,7 +14,7 @@ type ProjectsTableProps = {
 };
 
 const ProjectsTable = ({ projects }: ProjectsTableProps) => {
-  const [sortKey, setSortKey] = useState<keyof Project>("name");
+  const [sortKey, setSortKey] = useState<keyof Project>("title");
   const [ascending, setAscending] = useState(true);
 
   const sortedProjects = [...projects].sort((a, b) => {
@@ -37,8 +39,8 @@ const ProjectsTable = ({ projects }: ProjectsTableProps) => {
       <table className="dashboardContainer__recentProjects-table">
         <thead>
           <tr>
-            <th onClick={() => handleSort("name")}>
-              Nombre {sortKey === "name" ? (ascending ? "▲" : "▼") : ""}
+            <th onClick={() => handleSort("title")}>
+              Nombre {sortKey === "title" ? (ascending ? "▲" : "▼") : ""}
             </th>
             <th onClick={() => handleSort("client")}>
               Cliente {sortKey === "client" ? (ascending ? "▲" : "▼") : ""}
@@ -51,7 +53,7 @@ const ProjectsTable = ({ projects }: ProjectsTableProps) => {
         <tbody>
           {sortedProjects.map((project, index) => (
             <tr key={index}>
-              <td>{project.name}</td>
+              <td>{project.title}</td>
               <td>{project.client}</td>
               <td>{project.status}</td>
             </tr>

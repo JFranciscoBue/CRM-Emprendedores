@@ -1,3 +1,4 @@
+import Link from "next/link";
 import "./clientsTable.css";
 
 interface IClients {
@@ -5,6 +6,7 @@ interface IClients {
     name: string;
     email: string;
     phone: string;
+    _id: string;
   }[];
   onSort: (field: "name" | "email" | "phone") => void;
   currentSortField: "name" | "email" | "phone";
@@ -39,9 +41,15 @@ const ClientsTable = ({
         <tbody>
           {clients.map((client, index) => (
             <tr key={index}>
-              <td>{client.name}</td>
-              <td>{client.email}</td>
-              <td>{client.phone}</td>
+              <td>
+                <Link href={`/clients/${client._id}`}>{client.name}</Link>
+              </td>
+              <td>
+                <Link href={`/clients/${client._id}`}>{client.email}</Link>
+              </td>
+              <td>
+                <Link href={`/clients/${client._id}`}>{client.phone}</Link>
+              </td>
             </tr>
           ))}
         </tbody>

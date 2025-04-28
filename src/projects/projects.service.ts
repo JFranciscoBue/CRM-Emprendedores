@@ -3,6 +3,7 @@ import { IProjectDto } from "../dto/Project.dto";
 import mongoose from "mongoose";
 import Project from "../models/Project.model";
 import User from "../models/User.model";
+import Client from "../models/Client.model";
 
 const service = {
   getUserProjects: async (userId: string): Promise<Document[] | string> => {
@@ -53,8 +54,18 @@ const service = {
   },
 
   createProject: async (data: IProjectDto): Promise<Object> => {
-    const addedProject = new Project(data);
+    const addedProject = new Project({
+      ...data,
+      clientId: data.clientId,
+    });
     await addedProject.save();
+
+    // Luego, actualiza el cliente con el nuevo proyecto
+    const client = await Client.findById(data.clientId);
+    if (client) {
+      client.projects.push(addedProject._id);
+      await client.save();
+    }
 
     return { addedProject };
   },

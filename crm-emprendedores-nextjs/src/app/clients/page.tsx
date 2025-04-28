@@ -14,6 +14,7 @@ interface Client {
   name: string;
   email: string;
   phone: string;
+  _id: string;
 }
 
 interface ClientForm {
@@ -24,7 +25,9 @@ interface ClientForm {
 
 const ClientsPage = () => {
   const [userClients, setUserClients] = useState<Client[]>([]);
-  const [sortField, setSortField] = useState<keyof Client>("name");
+  const [sortField, setSortField] = useState<"name" | "email" | "phone">(
+    "name"
+  );
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [clientFormData, setClientFormData] = useState<ClientForm>({
     name: "",
@@ -51,7 +54,7 @@ const ClientsPage = () => {
     return 0;
   });
 
-  const handleSort = (field: keyof Client) => {
+  const handleSort = (field: "name" | "email" | "phone") => {
     if (sortField === field) {
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {

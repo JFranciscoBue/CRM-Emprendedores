@@ -15,7 +15,7 @@ const service = {
 
     const objectUserId = new mongoose.Types.ObjectId(userId);
     console.log(objectUserId);
-    
+
     const userClients = await Client.find({ userId: objectUserId });
 
     if (userClients.length === 0) {
@@ -46,11 +46,12 @@ const service = {
   },
 
   getClientById: async (id: string): Promise<Object> => {
-    const clientFound = await Client.findById(id);
-
+    const clientFound = await Client.findById(id).populate("projects");
     if (!clientFound) {
-      throw new Error(`Client with ID: ${id} hasn´t exist`);
+      throw new Error(`Client with ID: ${id} hasn't exist`);
     }
+
+    console.log(clientFound.projects);
 
     return { clientFound };
   },
