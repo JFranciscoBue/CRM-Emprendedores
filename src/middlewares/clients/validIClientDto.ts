@@ -14,23 +14,23 @@ const validClientDto = (
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   if (!name || !email || !phone || !userId) {
-    errors.fields = "All fields must be completed";
+    errors.fields = "Deben Completarse todos los campos";
   }
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
-    errors.userId = "Invalid MongoDB ID";
+    errors.userId = "ID Invalido";
   }
 
   if (!phoneRegex.test(phone)) {
-    errors.phone = "Invalid phone Format";
+    errors.phone = "Formato de Telefono Incorrecto";
   }
 
   if (!emailRegex.test(email)) {
-    errors.email = "Invalid Email Format";
+    errors.email = "Formato de Correo Electronico Incorrecto";
   }
 
   if (name.length < 3) {
-    errors.name = "Name must have more than 3 characters";
+    errors.name = "El nombre debe tener minimo 3 caracteres";
   }
 
   if (Object.keys(errors).length > 0) {

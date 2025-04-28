@@ -1,9 +1,11 @@
 "use client";
 import "./page.css";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import ILoginForm from "@/interfaces/loginForm";
 import loginFormValidation from "@/utils/forms/LoginFormValidation";
+import { loginRequest } from "../utils/api/axiosFetch";
+import { useRouter } from "next/navigation";
 
 const initialValue: ILoginForm = {
   email: "",
@@ -14,7 +16,14 @@ const errorsInitialValue: { [key: string]: string } = {};
 
 export default function Home() {
   const [formData, setFormData] = useState(initialValue);
-  const [errors, setErrors] = useState(errorsInitialValue);
+  const [formErrors, setFormErrors] = useState(errorsInitialValue);
+  const [credentialsErrors, setCredentialsErrors] = useState("");
+
+  const router = useRouter();
+
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     e.preventDefault();
@@ -33,23 +42,32 @@ export default function Home() {
 
     if (Object.keys(validations).length > 0) {
       alert("Formulario con errores");
-      setErrors(validations as { [key: string]: string });
+      setFormErrors(validations as { [key: string]: string });
       return;
     }
 
-    setErrors(errorsInitialValue);
-    alert("Formulario Enviado");
+    setFormErrors(errorsInitialValue);
 
-    setFormData(initialValue);
+    loginRequest(formData)
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+        router.push("/dashboard");
+      })
+      .catch((err) => {
+        console.error(err.response.data);
+        setCredentialsErrors(err.response.data);
+      });
   };
 
   return (
     <form className="loginForm" onSubmit={handleFormSubmit}>
       <h2>Inicia Sesion</h2>
-      {errors.fields && <p>{errors.fields}</p>}
+      {formErrors.fields && <p>{formErrors.fields}</p>}
+      {credentialsErrors && <p>{credentialsErrors}</p>}
       <div className="loginForm__field">
         <label htmlFor="email">Correo Electronico</label>
-        {errors.email && <p>{errors.email}</p>}
+        {formErrors.email && <p>{formErrors.email}</p>}
         <input
           type="text"
           onChange={handleInputChange}

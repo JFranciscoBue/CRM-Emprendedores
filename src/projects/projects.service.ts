@@ -19,7 +19,7 @@ const service = {
     const projects = await Project.find({ userId }).populate("clientId");
 
     if (projects.length === 0) {
-      return "You have not Projects Yet";
+      return [];
     }
 
     return projects;

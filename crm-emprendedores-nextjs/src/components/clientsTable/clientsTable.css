@@ -1,5 +1,5 @@
 .table-scroll {
-  max-height: 200px; /* Ajustá la altura que quieras */
+  max-height: 250px;
   overflow-y: auto;
 }
 
@@ -23,7 +23,7 @@
   scrollbar-color: #4caf50 #f4f6ef;
 }
 
-.dashboardContainer__recentProjects-table {
+.clientsPageContainer__table-table {
   width: 90%;
   max-width: 800px;
   margin: 0 auto;
@@ -38,23 +38,26 @@
   color: #2d4739;
 }
 
-.dashboardContainer__recentProjects-table thead {
+.clientsPageContainer__table-table thead {
   background-color: #cde6c3;
 }
 
-.dashboardContainer__recentProjects-table th,
-.dashboardContainer__recentProjects-table td {
+.clientsPageContainer__table-table th,
+.clientsPageContainer__table-table td {
   padding: 10px 12px;
   text-align: left;
   border-bottom: 1px solid #d9e7d0;
+}
+
+.clientsPageContainer__table-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.clientsPageContainer__table-table th {
   cursor: pointer;
 }
 
-.dashboardContainer__recentProjects-table th:hover {
+.clientsPageContainer__table-table th:hover {
   text-decoration: underline;
   color: #0070f3;
-}
-
-.dashboardContainer__recentProjects-table tbody tr:last-child td {
-  border-bottom: none;
 }
