@@ -1,5 +1,6 @@
 import ILoginForm from "@/interfaces/loginForm";
 import IClientForm from "@/interfaces/clientForm";
+import ProjectForm from "@/interfaces/projectsForm";
 import axios from "axios";
 
 const API = "http://localhost:4000";
@@ -39,6 +40,17 @@ export const addClient = async (clientData: IClientForm, token: string) => {
       Authorization: `Bearer ${token}`,
     },
   });
+
+  return response;
+};
+
+export const addProject = async (data: ProjectForm, token: string) => {
+  const response = await axios.post(`${API}/projects`, data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
   return response;
 };
 

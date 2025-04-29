@@ -5,11 +5,11 @@ const validProjectDto = (
   res: Response,
   next: NextFunction
 ): void => {
-  const { title, description, status, deadline, clientId, userId } = req.body;
+  const { title, status, clientId, userId } = req.body;
   const errors: { [key: string]: string } = {};
 
-  if (!title || !description || !status || !deadline || !clientId || !userId) {
-    errors.fields = "All fields must be completed";
+  if (!title || !status || !clientId || !userId) {
+    errors.fields = "Por favor Completa todos los campos";
   }
 
   if (title.length < 5) {
@@ -17,7 +17,7 @@ const validProjectDto = (
   }
 
   if (Object.keys(errors).length > 0) {
-    res.json(404).json({ errors });
+    res.status(400).json({ errors });
     return;
   }
 
