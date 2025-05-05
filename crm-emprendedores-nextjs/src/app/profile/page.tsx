@@ -40,6 +40,11 @@ const ProjectsPage = () => {
             }
             alt="Foto de Perfil"
           />
+          {userData?.imgProfile ? (
+            <button id="changeImgProfileButton">Editar Foto de Perfil</button>
+          ) : (
+            <button id="changeImgProfileButton">Agregar Foto de Perfil</button>
+          )}
           <h2>{userData?.fullname}</h2>
           <p>Emprendedor</p>
         </div>
