@@ -1,9 +1,15 @@
 import ILoginForm from "@/interfaces/loginForm";
 import IClientForm from "@/interfaces/clientForm";
 import ProjectForm from "@/interfaces/projectsForm";
+import RegisterForm from "@/interfaces/registerForm";
 import axios from "axios";
 
 const API = "http://localhost:4000";
+
+export const registerRequest = (formData: RegisterForm) => {
+  const response = axios.post(`${API}/auth/register`, formData);
+  return response;
+};
 
 export const loginRequest = async (formData: ILoginForm) => {
   const response = await axios.post(`${API}/auth/login`, formData);

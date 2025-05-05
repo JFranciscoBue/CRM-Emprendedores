@@ -3,5 +3,5 @@ export interface IClientDto {
   email: string;
   phone: string;
   notes?: string;
-  userId: string;
+  user: string;
 }

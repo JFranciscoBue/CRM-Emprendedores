@@ -43,7 +43,16 @@ const ClientsPage = () => {
       router.push("/");
     } else {
       clientsRequest(JSON.parse(user)._id, token)
-        .then((res) => setUserClients(res.data))
+        .then((res) => {
+          console.log(res.data);
+          if (typeof res.data === "string") {
+            setUserClients([]);
+            console.log(userClients);
+          } else {
+            setUserClients(res.data);
+            console.log(userClients);
+          }
+        })
         .catch((err) => console.error(err));
     }
   }, []);
@@ -80,15 +89,15 @@ const ClientsPage = () => {
       }
 
       const user = JSON.parse(localStorage.getItem("user")!);
+      console.log(user);
 
-      await addClient({ ...clientFormData, userId: user._id }, token).then(
-        () => {
-          toast.success("Cliente Agregado Correctamente");
-          clientsRequest(user._id, token).then((res) => {
-            setUserClients(res.data);
-          });
-        }
-      );
+      await addClient({ ...clientFormData, user: user._id }, token).then(() => {
+        toast.success("Cliente Agregado Correctamente");
+        clientsRequest(user._id, token).then((res) => {
+          setUserClients(res.data);
+          console.log(userClients);
+        });
+      });
 
       setClientFormData({
         name: "",

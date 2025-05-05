@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 
 const service = {
   getAllClients: async (): Promise<Document[]> => {
-    return await Client.find();
+    return await Client.find().populate("user");
   },
 
   getClientsByUser: async (userId: string): Promise<Document[] | string> => {
@@ -16,7 +16,8 @@ const service = {
     const objectUserId = new mongoose.Types.ObjectId(userId);
     console.log(objectUserId);
 
-    const userClients = await Client.find({ userId: objectUserId });
+    const userClients = await Client.find({ user: userId });
+    console.log(userClients);
 
     if (userClients.length === 0) {
       return "You have not any Client Yet. Add one!";

@@ -28,10 +28,16 @@ const Dashboard = () => {
       router.push("/");
     } else {
       const user = JSON.parse(storedUser);
+      console.log(user);
 
       clientsRequest(user._id, token)
         .then((res) => {
-          setUserData(res.data);
+          console.log(res.data);
+          if (typeof res.data === "string") {
+            setUserData([]);
+          } else {
+            setUserData(res.data);
+          }
         })
         .catch((err) => {
           console.error(err);

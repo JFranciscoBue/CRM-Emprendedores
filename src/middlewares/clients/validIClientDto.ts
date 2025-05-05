@@ -6,18 +6,18 @@ const validClientDto = (
   res: Response,
   next: NextFunction
 ): void => {
-  const { name, email, phone, userId } = req.body;
+  const { name, email, phone, user } = req.body;
 
   const errors: { [key: string]: string } = {};
 
   const phoneRegex = /^\+\d{2,4}\d{6,12}$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (!name || !email || !phone || !userId) {
+  if (!name || !email || !phone || !user) {
     errors.fields = "Deben Completarse todos los campos";
   }
 
-  if (!mongoose.Types.ObjectId.isValid(userId)) {
+  if (!mongoose.Types.ObjectId.isValid(user)) {
     errors.userId = "ID Invalido";
   }
 
