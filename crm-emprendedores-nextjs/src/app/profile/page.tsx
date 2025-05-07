@@ -4,16 +4,20 @@ import "./projectsPage.css";
 import Sidebar from "@/components/sidebar/page";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-
-interface UserData {
-  fullname: string;
-  email: string;
-  phone: string;
-  imgProfile: string;
-}
+import UserData from "@/interfaces/userData";
+import {
+  changeEmailRequest,
+  changePasswordRequest,
+} from "../../utils/api/axiosFetch";
+import { toast, ToastContainer } from "react-toastify";
 
 const ProjectsPage = () => {
   const [userData, setUserData] = useState<UserData | null>(null);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [newPassword, setNewPassword] = useState("");
+  const [newEmail, setNewEmail] = useState("");
+
   const router = useRouter();
 
   useEffect(() => {
@@ -27,6 +31,38 @@ const ProjectsPage = () => {
       setUserData(user);
     }
   }, []);
+
+  const handleChangePassword = async () => {
+    const token = localStorage.getItem("token");
+    if (!token || !userData) return;
+
+    try {
+      await changePasswordRequest(userData._id, newPassword, token);
+      alert("Contraseña actualizada");
+      setShowPasswordModal(false);
+      setNewPassword("");
+      toast.success("Contraseña Cambiada Correctamente");
+    } catch (err) {
+      alert("Error al cambiar la contraseña");
+    }
+  };
+
+  const handleChangeEmail = async () => {
+    const token = localStorage.getItem("token");
+    if (!token || !userData) return;
+
+    try {
+      await changeEmailRequest(userData._id, newEmail, token);
+      alert("Correo actualizado");
+      const updatedUser = { ...userData, email: newEmail };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      setUserData(updatedUser);
+      setShowEmailModal(false);
+      setNewEmail("");
+    } catch (err) {
+      alert("Error al cambiar el correo");
+    }
+  };
 
   return (
     <>
@@ -54,11 +90,56 @@ const ProjectsPage = () => {
           <p>{userData?.phone}</p>
         </div>
         <div className="profileContainer__buttons">
-          <button>Cambiar Contraseña</button>
-          <button>Cambiar Correo</button>
+          <button onClick={() => setShowPasswordModal(true)}>
+            Cambiar Contraseña
+          </button>
+          <button onClick={() => setShowEmailModal(true)}>
+            Cambiar Correo
+          </button>
           <button>Eliminar Cuenta</button>
         </div>
       </div>
+
+      {/* MODAL CAMBIAR CONTRASEÑA */}
+      {showPasswordModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Nueva Contraseña</h3>
+            <input
+              type="password"
+              placeholder="Nueva contraseña"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <div className="modal-buttons">
+              <button onClick={handleChangePassword}>Confirmar</button>
+              <button onClick={() => setShowPasswordModal(false)}>
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL CAMBIAR EMAIL */}
+      {showEmailModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Nuevo Correo</h3>
+            <input
+              type="email"
+              placeholder="Nuevo correo"
+              value={newEmail}
+              onChange={(e) => setNewEmail(e.target.value)}
+            />
+            <div className="modal-buttons">
+              <button onClick={handleChangeEmail}>Confirmar</button>
+              <button onClick={() => setShowEmailModal(false)}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
+      <ToastContainer />
     </>
   );
 };

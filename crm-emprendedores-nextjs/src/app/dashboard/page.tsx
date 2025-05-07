@@ -7,14 +7,7 @@ import ProjectsTable from "@/components/projectsTable/page";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { clientsRequest, projectsRequest } from "../../utils/api/axiosFetch";
-
-interface Project {
-  title: string;
-  clientId: {
-    name: string;
-  };
-  status: string;
-}
+import Project from "@/interfaces/projects";
 
 const Dashboard = () => {
   const [userData, setUserData] = useState([]);

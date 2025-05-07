@@ -69,3 +69,43 @@ export const getClient = async (id: string, token: string) => {
 
   return response;
 };
+
+export const changePasswordRequest = async (
+  id: string,
+  newPassword: string,
+  token: string
+) => {
+  const response = await axios.patch(
+    `${API}/users/changePassword/${id}`,
+    { password: newPassword },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  console.log(response);
+
+  return response;
+};
+
+export const changeEmailRequest = async (
+  id: string,
+  newEmail: string,
+  token: string
+) => {
+  const response = await axios.patch(
+    `${API}/users/changeEmail/${id}`,
+    { email: newEmail },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  console.log(response);
+
+  return response;
+};

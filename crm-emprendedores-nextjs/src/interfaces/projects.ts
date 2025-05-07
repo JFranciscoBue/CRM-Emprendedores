@@ -1,5 +1,9 @@
-export default interface Projects {
+interface Project {
   title: string;
-  client: string;
+  clientId: {
+    name: string;
+  };
   status: string;
 }
+
+export default Project;

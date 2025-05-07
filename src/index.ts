@@ -4,6 +4,7 @@ import cors from "cors";
 import authRouter from "./auth/auth.routes";
 import clientsRouter from "./clients/clients.routes";
 import projectsRouter from "./projects/projects.routes";
+import usersRouter from "./users/users.routes";
 import DBConnection from "./database";
 import { config as envConfig } from "dotenv";
 import tokenValidation from "./middlewares/authorization/token";
@@ -24,6 +25,7 @@ app.set("port", process.env.PORT || 3000);
 app.use("/auth", authRouter);
 app.use("/clients", tokenValidation, clientsRouter);
 app.use("/projects", tokenValidation, projectsRouter);
+app.use("/users", usersRouter);
 
 // Initialization
 

@@ -9,19 +9,8 @@ import { useState, useEffect } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-interface Client {
-  name: string;
-  email: string;
-  phone: string;
-  _id: string;
-}
-
-interface ClientForm {
-  name: string;
-  email: string;
-  phone: string;
-}
+import IClientForm from "@/interfaces/clientForm";
+import Client from "@/interfaces/client";
 
 const ClientsPage = () => {
   const [userClients, setUserClients] = useState<Client[]>([]);
@@ -29,7 +18,7 @@ const ClientsPage = () => {
     "name"
   );
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [clientFormData, setClientFormData] = useState<ClientForm>({
+  const [clientFormData, setClientFormData] = useState<IClientForm>({
     name: "",
     email: "",
     phone: "",

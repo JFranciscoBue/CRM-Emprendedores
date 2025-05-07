@@ -6,6 +6,7 @@ import ILoginForm from "@/interfaces/loginForm";
 import loginFormValidation from "@/utils/forms/LoginFormValidation";
 import { loginRequest } from "../utils/api/axiosFetch";
 import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
 
 const initialValue: ILoginForm = {
   email: "",
@@ -17,7 +18,6 @@ const errorsInitialValue: { [key: string]: string } = {};
 export default function Home() {
   const [formData, setFormData] = useState(initialValue);
   const [formErrors, setFormErrors] = useState(errorsInitialValue);
-  const [credentialsErrors, setCredentialsErrors] = useState("");
 
   const router = useRouter();
 
@@ -41,7 +41,6 @@ export default function Home() {
     const validations = loginFormValidation(formData);
 
     if (Object.keys(validations).length > 0) {
-      alert("Formulario con errores");
       setFormErrors(validations as { [key: string]: string });
       return;
     }
@@ -55,8 +54,7 @@ export default function Home() {
         router.push("/dashboard");
       })
       .catch((err) => {
-        console.error(err.response.data);
-        setCredentialsErrors(err.response.data);
+        toast.error(err.response.data);
       });
   };
 
@@ -64,7 +62,6 @@ export default function Home() {
     <form className="loginForm" onSubmit={handleFormSubmit}>
       <h2>Inicia Sesion</h2>
       {formErrors.fields && <p>{formErrors.fields}</p>}
-      {credentialsErrors && <p>{credentialsErrors}</p>}
       <div className="loginForm__field">
         <label htmlFor="email">Correo Electronico</label>
         {formErrors.email && <p>{formErrors.email}</p>}
@@ -90,6 +87,7 @@ export default function Home() {
       <div className="loginForm__registerButton">
         <Link href="/register">Registrate</Link>
       </div>
+      <ToastContainer />
     </form>
   );
 }
